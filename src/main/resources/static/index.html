@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/jquery-1.12.4.min.js"></script>
+    <script src="bootstrap-3.4.1-dist/js/bootstrap.min.js"></script>
+    <link href="bootstrap-3.4.1-dist/css/bootstrap.min.css" rel="stylesheet">
+    <style type="text/css">
+        .content{
+            display:none;
+            width:250px;
+            height:70px;
+            border-radius:10px;
+            padding:20px;
+            top:15px;
+            left:80px;
+            background-color:#2F4056;
+            z-index: 999;
+            /*position: absolute;*/
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+<!--                <img src="static/img/1.jpg">-->
+                <h1>大数据应聘信息</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-md-offset-10">
+                <button type="button" class="btn btn-primary">刷新</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-1"><h2></h2></div>
+        </div>
+<!--        第1行-->
+        <div class="row">
+            <div class="col-md-3">
+                <div class="row" id="L1">
+                    <img src="img/1.jpg" width="290px" height="250px">
+                </div>
+                <div class="row">
+                    <div class="col-md-1"><h3></h3></div>
+                </div>
+                <div class="row" id="L2">
+                    <img src="img/1.jpg" width="290px" height="250px">
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="row">
+                    <div class="col-md-6" id="L3">
+                        <img src="img/1.jpg" width="430px" height="340px">
+                    </div>
+                    <div class="col-md-3" id="L4">
+                        <img src="img/1.jpg" width="300px" height="340px">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-1"><h3></h3></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-9" id="L5">
+                        <img src="img/1.jpg" width="740px" height="160px">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="content1" class="content" style="color: white;">
+        无聊望见了忧郁，达到理想不太易
+    </div>
+    <div id="content2" class="content" style="color: white;">
+        谁人定我去或留，定我心中的宇宙
+    </div>
+    <div id="content3" class="content" style="color: white;">
+        L3
+    </div>
+    <div id="content4" class="content" style="color: white;">
+        L4
+    </div>
+    <div id="content5" class="content" style="color: white;">
+        L5
+    </div>
+</body>
+</html>
+<script type="text/javascript">
+
+    var getCoordInDocument = function(e) {
+        e = e || window.event;
+        var x = e.pageX || (e.clientX +
+            (document.documentElement.scrollLeft
+                || document.body.scrollLeft));
+        var y = e.pageY || (e.clientY +
+            (document.documentElement.scrollTop
+                || document.body.scrollTop));
+        return {'x': x, 'y': y};
+    }
+
+    var getXY = function (st1, st2) {
+        var coords = document.getElementById(st1);
+        coords.onmousemove = function(e){
+            var pointer = getCoordInDocument(e);
+            var top = pointer.y;
+            var left = pointer.x;
+            $(st2).css({'top':top,'left':left, 'position':"absolute"});
+        }
+    }
+    var getDetailInfo = function () {
+        $.get("info/detail", function (result) {
+            var s = $(".content")
+            for (var i = 0; i <5; i++) {
+                s[i].text(result["L" + (i + 1)])
+            }
+
+        })
+    }
+        $(document).ready(function(){
+            getDetailInfo();
+            $("#L1").mouseover(function(){
+                getXY("L1", "#content1")
+                $("#content1").show();
+                $("#L1").mouseout(function(){
+                    $("#content1").hide();
+                });
+            });
+            $("#L2").mouseover(function(){
+                getXY("L2", "#content2")
+                $("#content2").show();
+                $("#L2").mouseout(function(){
+                    $("#content2").hide();
+                });
+            });
+            $("#L3").mouseover(function(){
+                getXY("L3", "#content3")
+                $("#content3").show();
+                $("#L3").mouseout(function(){
+                    $("#content3").hide();
+                });
+            });
+            $("#L4").mouseover(function(){
+                getXY("L4", "#content4")
+                $("#content4").show();
+                $("#L4").mouseout(function(){
+                    $("#content4").hide();
+                });
+            });
+            $("#L5").mouseover(function(){
+                getXY("L5", "#content5")
+                $("#content5").show();
+                $("#L5").mouseout(function(){
+                    $("#content5").hide();
+                });
+            });
+    })
+</script>

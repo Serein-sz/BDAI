@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>鼠标悬停显示提示信息窗口</title>
+    <meta http-equiv="content-type">
+
+    <script src="js/jquery-1.12.4.min.js"></script>
+
+</head>
+<body>
+<a href="#" id="'+data[i].refundId+'"OrderInform"" data-placement="right" onmouseover="tip.start(this)" style="color:#00FFCC;left:;top:;"> 测试标签</span></a>
+<div class="" id="OrderInform" style="position:absolute;display:none;width:217px;height:500px;border:solid 5px #000000">测试框</div>
+</body>
+</html>
+<script type="text/javascript">
+    $:function(ele){
+        if(typeof(ele)=="object")
+            return ele;
+        else if(typeof(ele)=="string"||typeof(ele)=="number")
+            return document.getElementById(ele.toString());
+        return null;
+    },
+    mousePos:function(e){
+        var x,y;
+        var e = e||window.event;
+        return{ x:e.clientX+document.body.scrollLeft+document.documentElement.scrollLeft,
+            y:e.clientY+document.body.scrollTop+document.documentElement.scrollTop};
+    },
+    start:function(obj){
+        var self = this;
+        obj.onmousemove=function(e){
+            console.log(e)
+            var mouse = self.mousePos(e);
+            console.log(mouse)
+            var left= mouse.x + 'px';
+            var top= mouse.y + 'px';
+
+            if(mouse.y+400>900){
+                top=mouse.y-500+'px';
+            }
+
+            $("#OrderInform").css({'top':top,'left':left});
+            $("#OrderInform").show();
+        };
+        obj.onmouseout=function(){
+            $("#OrderInform").hide(); //失去焦点关闭
+        };
+    }
+</script>
